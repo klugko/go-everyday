@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-// mkTree crée une arborescence à partir d'un map[chemin]contenu.
+// mkTree crée une arborescence
 // Un chemin terminé par "/" est un dossier vide.
 func mkTree(t *testing.T, root string, files map[string]string) {
 	t.Helper()

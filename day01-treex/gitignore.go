@@ -8,8 +8,6 @@ import (
 	"strings"
 )
 
-// Une règle compilée. `base` est le dossier où vivait le .gitignore,
-// dont sert d'ancrage pour calculer le chemin relatif au moment du match.
 type rule struct {
 	base    string
 	re      *regexp.Regexp
@@ -17,7 +15,7 @@ type rule struct {
 	dirOnly bool // se termine par '/'
 }
 
-// readGitignore lit le .gitignore d'un dossier (s'il existe).
+//  lit le .gitignore d'un dossier 
 func readGitignore(dir string) []rule {
 	f, err := os.Open(filepath.Join(dir, ".gitignore"))
 	if err != nil {
@@ -35,11 +33,8 @@ func readGitignore(dir string) []rule {
 	return out
 }
 
-// compileRule traduit une ligne de .gitignore en regexp.
+// traduit une ligne de .gitignore en regexp.
 // Retourne nil pour les commentaires et lignes vides.
-//
-// On utilise une regexp plutôt que filepath.Match parce que Match ne sait
-// pas faire `**` (segments arbitraires) ni distinguer pattern ancré vs flottant.
 func compileRule(base, line string) *rule {
 	line = strings.TrimRight(line, " \t")
 	if line == "" || strings.HasPrefix(line, "#") {
@@ -88,8 +83,7 @@ func compileRule(base, line string) *rule {
 			i++
 		}
 	}
-	// On laisse aussi matcher les descendants : si "node_modules" matche le
-	// dossier, on veut aussi "node_modules/foo/bar" comme ignoré.
+	// On laisse aussi matcher les descendants 
 	sb.WriteString(`(?:/.*)?$`)
 
 	re, err := regexp.Compile(sb.String())
@@ -100,11 +94,8 @@ func compileRule(base, line string) *rule {
 	return &r
 }
 
-// isIgnored applique la liste de règles à un chemin.
-//
-// Sémantique git : on parcourt dans l'ordre, le DERNIER match l'emporte.
-// Les règles d'un .gitignore enfant sont append après celles du parent,
-// donc elles gagnent naturellement — pas besoin de stack explicite.
+//  applique la liste de règles à un chemin.
+// on parcourt dans l'ordre, le DERNIER match l'emporte.
 func isIgnored(rules []rule, path string, isDir bool) bool {
 	ignored := false
 	for _, r := range rules {

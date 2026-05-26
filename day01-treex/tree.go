@@ -23,8 +23,7 @@ type options struct {
 }
 
 // build descend récursivement et retourne le nœud + sa taille agrégée.
-// Les règles de .gitignore traversent la récursion : chaque niveau ajoute
-// les siennes (s'il y en a) à la pile reçue, sans toucher à celle du parent.
+// récursion : chaque niveau ajoute
 func build(path string, rules []rule, opts options, depth int) *node {
 	info, err := os.Lstat(path)
 	if err != nil {
@@ -45,7 +44,7 @@ func build(path string, rules []rule, opts options, depth int) *node {
 	if err != nil {
 		return n
 	}
-	// Dossiers d'abord, puis alphabétique insensible à la casse.
+	// Dossiers d'abord, alphabétique insensible à la casse.
 	sort.Slice(entries, func(i, j int) bool {
 		a, b := entries[i], entries[j]
 		if a.IsDir() != b.IsDir() {
@@ -57,7 +56,7 @@ func build(path string, rules []rule, opts options, depth int) *node {
 	for _, e := range entries {
 		name := e.Name()
 		if name == ".git" {
-			continue // toujours masqué, même avec -a
+			continue 
 		}
 		if !opts.showHidden && strings.HasPrefix(name, ".") {
 			continue
@@ -77,7 +76,7 @@ func build(path string, rules []rule, opts options, depth int) *node {
 	return n
 }
 
-// humanSize formate des octets en unités binaires (KiB, MiB, ...).
+// humanSize formate  (KiB, MiB, ...).
 func humanSize(b int64) string {
 	const unit = 1024
 	if b < unit {
@@ -91,7 +90,7 @@ func humanSize(b int64) string {
 	return fmt.Sprintf("%.1f %ciB", float64(b)/float64(div), "KMGTPE"[exp])
 }
 
-// render affiche l'arbre avec les caractères box-drawing classiques.
+//  affiche l'arbre avec les caractères box-drawing.
 func render(w io.Writer, n *node, prefix string, isLast, isRoot bool) {
 	if isRoot {
 		fmt.Fprintf(w, "%s  [%s]\n", n.name, humanSize(n.size))
