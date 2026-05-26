@@ -2,7 +2,7 @@
 
 Le problème c'est que `tree` dans un projet Node, ça crache 50000 lignes de
 `node_modules/`. À chaque fois faut faire `tree -I 'node_modules|dist|...'`
-et on en oublie toujours. Or git, lui, sait déjà ce qu'il faut ignorer —
+et on en oublie toujours. Or git, lui, sait déjà ce qu'il faut ignorer
 c'est dans `.gitignore`. Donc l'idée bête : un `tree` qui lit le `.gitignore`.
 
 ## Le cheminement
@@ -32,7 +32,7 @@ intuition : un objet `frame` par `.gitignore`, et une pile de frames qu'on
 empile/dépile en descendant. Ça marche mais c'est lourd.
 
 Puis je me suis dit : si je mets toutes les règles à plat dans une seule
-slice — parent d'abord, enfant après — et que je dis "dernier match gagne",
+slice parent d'abord, enfant après — et que je dis "dernier match gagne",
 ça donne exactement la bonne sémantique git, sans aucune notion de stack.
 La slice EST la pile. Et comme en Go on passe `rules []rule` à la fonction
 récursive et qu'on fait `rules = append(rules, ...)` à chaque niveau, le
@@ -49,7 +49,7 @@ Au début je supportais les classes `[abc]` dans les patterns, les
 que dans les vrais `.gitignore` que je rencontre, ces trucs apparaissent
 genre jamais. Donc ciseaux.
 
-Pas de suivi des symlinks non plus — risque de boucle infinie, et c'est
+Pas de suivi des symlinks non plus  risque de boucle infinie, et c'est
 pas ce qu'on veut quand on visualise un arbre.
 
 ## Usage
