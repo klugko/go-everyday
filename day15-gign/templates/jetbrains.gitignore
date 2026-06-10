@@ -1,0 +1,4 @@
+# Dossier projet et modules des IDE JetBrains (IntelliJ, GoLand…)
+.idea/
+*.iml
+*.iws

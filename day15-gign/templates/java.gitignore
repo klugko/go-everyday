@@ -1,0 +1,10 @@
+# Classes compilées et archives
+*.class
+*.jar
+*.war
+*.ear
+
+# Sorties de build Maven / Gradle
+target/
+build/
+.gradle/

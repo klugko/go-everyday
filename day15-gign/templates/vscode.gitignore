@@ -1,0 +1,4 @@
+# Réglages perso de l'éditeur, sauf le partagé de l'équipe
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json

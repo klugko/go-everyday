@@ -1,0 +1,20 @@
+# Dépendances
+node_modules/
+.pnp/
+.pnp.js
+
+# Journaux
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build
+dist/
+build/
+.next/
+out/
+
+# Variables d'environnement
+.env
+.env.local
+.env.*.local

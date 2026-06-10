@@ -1,0 +1,18 @@
+# Binaires compilés
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Sortie de test et de couverture
+*.test
+*.out
+coverage.txt
+
+# Dépendances vendorisées
+/vendor/
+
+# Fichiers de workspace
+go.work
+go.work.sum
